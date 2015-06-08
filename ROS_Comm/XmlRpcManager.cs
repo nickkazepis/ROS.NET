@@ -90,7 +90,7 @@ namespace Ros_CSharp
                 if (server.Dispatch == null)
                 {
                     throw new Exception("XmlRpcManager isn't initialized yet!");
-                    return;
+                    //return;
                 }
                 lock (added_connections_mutex)
                 {

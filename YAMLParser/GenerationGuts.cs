@@ -27,7 +27,7 @@ namespace FauxMessages
         private List<string> def = new List<string>();
         public string dimensions = "";
         public string fronthalf;
-        private string memoizedcontent;
+        //private string memoizedcontent;
         private bool meta;
         public string requestbackhalf;
         public string requestfronthalf;
@@ -470,10 +470,10 @@ namespace FauxMessages
 
         public override string ToString()
         {
-            bool wasnull = false;
+            //bool wasnull = false;
             if (fronthalf == null)
             {
-                wasnull = true;
+                //wasnull = true;
                 fronthalf = "";
                 backhalf = "";
                 string[] lines = File.ReadAllLines("TemplateProject\\PlaceHolder._cs");
@@ -539,7 +539,7 @@ namespace FauxMessages
                 //    GeneratedDictHelper = TypeInfo.Generate(classname, ns, HasHeader, meta, def, Stuff);
                 GeneratedDictHelper = GenFields();
                 string GeneratedDeserializationCode = "";
-                bool literal = false;
+                //bool literal = false;
                 StringBuilder DEF = new StringBuilder();
                 foreach (string s in def)
                     DEF.AppendLine(s);
@@ -642,20 +642,20 @@ namespace FauxMessages
             {
                 case "decimal":
                     return "m";
-                    break;
+                    //break;
                 case "single":
                 case "float":
                     return "f";
-                    break;
+                    //break;
                 case "long":
                     return "l";
-                    break;
+                    //break;
                 case "ulong":
                     return "ul";
-                    break;
+                    //break;
                 case "uint":
                     return "ui";
-                    break;
+                    //break;
                 default:
                     return "";
             }
@@ -685,10 +685,10 @@ namespace FauxMessages
                 if (t.Test(test))
                 {
                     t.rostype = t.Type;
-                    return t.Finalize(parent,test);
+					return t.FinalizeType(parent, test);
                 }
             }
-            return t.Finalize(parent, t.input.Split(spliter, StringSplitOptions.RemoveEmptyEntries), false);
+			return t.FinalizeType(parent, t.input.Split(spliter, StringSplitOptions.RemoveEmptyEntries), false);
         }
     }
 
@@ -738,17 +738,17 @@ namespace FauxMessages
             return (input.Split(' ')[0].ToLower().Equals(candidate.Key));
         }
 
-        public SingleType Finalize(MsgsFile parent, KeyValuePair<string, string> csharptype)
+        public SingleType FinalizeType(MsgsFile parent, KeyValuePair<string, string> csharptype)
         {
             string[] PARTS = input.Split(' ');
             rostype = PARTS[0];
             if (!KnownStuff.KnownTypes.ContainsKey(rostype))
                 meta = true;
             PARTS[0] = csharptype.Value;
-            return Finalize(parent, PARTS, true);
+			return FinalizeType(parent, PARTS, true);
         }
 
-        public SingleType Finalize(MsgsFile parent, string[] s, bool isliteral)
+		public SingleType FinalizeType(MsgsFile parent, string[] s, bool isliteral)
         {
             backup = new string[s.Length];
             Array.Copy(s, backup, s.Length);

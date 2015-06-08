@@ -85,7 +85,7 @@ namespace XmlRpc_Wrapper
 
 
         [DebuggerStepThrough]
-        private new static void AddRef(IntPtr ptr)
+        private static void AddRef(IntPtr ptr)
         {
 #if REFDEBUG
             if (refdumper == null)
@@ -115,7 +115,7 @@ namespace XmlRpc_Wrapper
         }
 
         [DebuggerStepThrough]
-        private new static void RmRef(ref IntPtr ptr)
+        private static void RmRef(ref IntPtr ptr)
         {
             lock (reflock)
             {
@@ -297,7 +297,7 @@ namespace XmlRpc_Wrapper
 
 
         [DebuggerStepThrough]
-        public new void SegFault()
+        public void SegFault()
         {
             if (instance == IntPtr.Zero)
                 throw new Exception("This isn't really a segfault, but your pointer is invalid, so it would have been!");

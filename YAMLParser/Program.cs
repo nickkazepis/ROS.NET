@@ -164,7 +164,7 @@ namespace YAMLParser
                 GenerateProject(msgsFiles, srvFiles, false);
                 GenerateProject(msgsFiles, srvFiles, true);
                 BuildProject();
-                Finalize();
+                FinalizeTypes();
             }
             else
             {
@@ -353,63 +353,63 @@ namespace YAMLParser
             }
         }
 
-        public static void Finalize()
-        {
-            string F = VCDir + "\\msbuild.exe";
-            Console.WriteLine("\n\nBUILDING A PROJECT THAT REFERENCES THE GENERATED CODE, TO REFINE THE GENERATED CODE!");
-            string args = "/nologo \"" + outputdir_secondpass + "\\SecondPass.csproj\"";
-            Process proc = new Process();
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-            proc.StartInfo.FileName = F;
-            proc.StartInfo.Arguments = args;
-            proc.Start();
-            string output = proc.StandardOutput.ReadToEnd();
-            string error = proc.StandardError.ReadToEnd();
-            string output2 = "", error2 = "";
+		public static void FinalizeTypes()
+		{
+			string F = VCDir + "\\msbuild.exe";
+			Console.WriteLine("\n\nBUILDING A PROJECT THAT REFERENCES THE GENERATED CODE, TO REFINE THE GENERATED CODE!");
+			string args = "/nologo \"" + outputdir_secondpass + "\\SecondPass.csproj\"";
+			Process proc = new Process();
+			proc.StartInfo.RedirectStandardOutput = true;
+			proc.StartInfo.RedirectStandardError = true;
+			proc.StartInfo.UseShellExecute = false;
+			proc.StartInfo.CreateNoWindow = true;
+			proc.StartInfo.FileName = F;
+			proc.StartInfo.Arguments = args;
+			proc.Start();
+			string output = proc.StandardOutput.ReadToEnd();
+			string error = proc.StandardError.ReadToEnd();
+			string output2 = "", error2 = "";
 #if !SINGLE_PASS
-            if (File.Exists(outputdir_secondpass + "\\bin\\Debug\\SecondPass.exe"))
-            {
-                Process proc2 = new Process();
-                proc2.StartInfo.RedirectStandardOutput = true;
-                proc2.StartInfo.RedirectStandardError = true;
-                proc2.StartInfo.UseShellExecute = false;
-                proc2.StartInfo.CreateNoWindow = true;
+			if (File.Exists(outputdir_secondpass + "\\bin\\Debug\\SecondPass.exe"))
+			{
+				Process proc2 = new Process();
+				proc2.StartInfo.RedirectStandardOutput = true;
+				proc2.StartInfo.RedirectStandardError = true;
+				proc2.StartInfo.UseShellExecute = false;
+				proc2.StartInfo.CreateNoWindow = true;
 #if !!NOT_ON_TOP_OF_ITSELF
-                proc2.StartInfo.Arguments = "..\\..\\..\\TempMessages\\";
+				proc2.StartInfo.Arguments = "..\\..\\..\\TempMessages\\";
 #endif
-                proc2.StartInfo.FileName = outputdir_secondpass + "\\bin\\Debug\\SecondPass.exe";
-                proc2.Start();
-                output2 = proc2.StandardOutput.ReadToEnd();
-                error2 = proc2.StandardError.ReadToEnd();
-                BuildProject("REBUILDING THE REFINED GENERATED CODE!");
-            }
-            else
-            {
-                if (output.Length > 0)
-                    Console.WriteLine(output);
-                if (error.Length > 0)
-                    Console.WriteLine(error);
-                Console.WriteLine("AMG BUILD FAIL!");
-            }
-            if (output2.Length > 0)
-                Console.WriteLine(output2);
-            if (error2.Length > 0)
-                Console.WriteLine(error2);
-            Console.WriteLine("DO SOMETHING HERE TO CHANGE THE FILES IN: outputdir\\Messages.csproj !!!!");
-            proc = new Process {StartInfo = {RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true, FileName = F, Arguments = "/nologo \"" + outputdir + "\\Messages.csproj\""}};
-            proc.Start();
-            string output3 = proc.StandardOutput.ReadToEnd();
-            string error3 = proc.StandardError.ReadToEnd();
-            if (output3.Length > 0)
-                Console.WriteLine(output3);
-            if (error3.Length > 0)
-                Console.WriteLine(error3);
+				proc2.StartInfo.FileName = outputdir_secondpass + "\\bin\\Debug\\SecondPass.exe";
+				proc2.Start();
+				output2 = proc2.StandardOutput.ReadToEnd();
+				error2 = proc2.StandardError.ReadToEnd();
+				BuildProject("REBUILDING THE REFINED GENERATED CODE!");
+			}
+			else
+			{
+				if (output.Length > 0)
+					Console.WriteLine(output);
+				if (error.Length > 0)
+					Console.WriteLine(error);
+				Console.WriteLine("AMG BUILD FAIL!");
+			}
+			if (output2.Length > 0)
+				Console.WriteLine(output2);
+			if (error2.Length > 0)
+				Console.WriteLine(error2);
+			Console.WriteLine("DO SOMETHING HERE TO CHANGE THE FILES IN: outputdir\\Messages.csproj !!!!");
+			proc = new Process { StartInfo = { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true, FileName = F, Arguments = "/nologo \"" + outputdir + "\\Messages.csproj\"" } };
+			proc.Start();
+			string output3 = proc.StandardOutput.ReadToEnd();
+			string error3 = proc.StandardError.ReadToEnd();
+			if (output3.Length > 0)
+				Console.WriteLine(output3);
+			if (error3.Length > 0)
+				Console.WriteLine(error3);
 #endif
-            Console.WriteLine("FINAL PASS DONE");
-        }
+			Console.WriteLine("FINAL PASS DONE");
+		}
 
         private static string uberpwnage;
 

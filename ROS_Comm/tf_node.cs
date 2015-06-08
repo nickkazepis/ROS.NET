@@ -154,7 +154,7 @@ namespace Ros_CSharp
         private SortedList<uint, TimeCache> frames = new SortedList<uint, TimeCache>();
 
         private bool interpolating;
-        private tf_node tfnode = null;
+        //private tf_node tfnode = null;
 
         public Transformer(bool interpolating = true, ulong ct = (ulong) DEFAULT_CACHE_TIME)
         {
@@ -442,7 +442,7 @@ namespace Ros_CSharp
             List<TimeAndFrameID> lct = new List<TimeAndFrameID>();
 
             uint frame = source_id;
-            TimeAndFrameID temp;
+            //TimeAndFrameID temp;
             uint depth = 0;
             ulong common_time = ulong.MaxValue;
             while (frame != 0)
@@ -1255,36 +1255,36 @@ namespace Ros_CSharp
         {
             emVector3 tmp = new emMatrix3x3(this).getYPR();
             return new emVector3(tmp.z, tmp.y, tmp.x);
-            emVector3 ret = new emVector3();
-            double w2 = w*w;
-            double x2 = x*x;
-            double y2 = y*y;
-            double z2 = z*z;
-            double unitLength = length(); // Normalized == 1, otherwise correction divisor.
-            double abcd = w*x + y*z;
-            double eps = Math.E;
-            double pi = Math.PI;
-            if (abcd > (0.5 - eps)*unitLength)
-            {
-                ret.z = 2*Math.Atan2(y, w);
-                ret.y = pi;
-                ret.x = 0;
-            }
-            else if (abcd < (-0.5 + eps)*unitLength)
-            {
-                ret.z = -2*Math.Atan2(y, w);
-                ret.y = -pi;
-                ret.x = 0;
-            }
-            else
-            {
-                double adbc = w*z - x*y;
-                double acbd = w*y - x*z;
-                ret.z = Math.Atan2(2*adbc, 1 - 2*(z2 + x2));
-                ret.y = Math.Asin(2*abcd/unitLength);
-                ret.x = Math.Atan2(2*acbd, 1 - 2*(y2 + x2));
-            }
-            return ret;
+			//emVector3 ret = new emVector3();
+			//double w2 = w*w;
+			//double x2 = x*x;
+			//double y2 = y*y;
+			//double z2 = z*z;
+			//double unitLength = length(); // Normalized == 1, otherwise correction divisor.
+			//double abcd = w*x + y*z;
+			//double eps = Math.E;
+			//double pi = Math.PI;
+			//if (abcd > (0.5 - eps)*unitLength)
+			//{
+			//	ret.z = 2*Math.Atan2(y, w);
+			//	ret.y = pi;
+			//	ret.x = 0;
+			//}
+			//else if (abcd < (-0.5 + eps)*unitLength)
+			//{
+			//	ret.z = -2*Math.Atan2(y, w);
+			//	ret.y = -pi;
+			//	ret.x = 0;
+			//}
+			//else
+			//{
+			//	double adbc = w*z - x*y;
+			//	double acbd = w*y - x*z;
+			//	ret.z = Math.Atan2(2*adbc, 1 - 2*(z2 + x2));
+			//	ret.y = Math.Asin(2*abcd/unitLength);
+			//	ret.x = Math.Atan2(2*acbd, 1 - 2*(y2 + x2));
+			//}
+			//return ret;
         }
 
         public static emQuaternion FromRPY(emVector3 rpy)

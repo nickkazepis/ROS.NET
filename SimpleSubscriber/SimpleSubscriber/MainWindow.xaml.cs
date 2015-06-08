@@ -24,7 +24,7 @@ namespace SimpleSubscriber
     /// </summary>
     public partial class MainWindow : Window
     {
-        Subscriber<Messages.std_msgs.String> sub;
+        Subscriber<Messages.SimpleSubscriber.SimpleMessage> sub;
         NodeHandle nh;
 
         public MainWindow()
@@ -34,22 +34,22 @@ namespace SimpleSubscriber
             ROS.Init(new string[0], "wpf_listener");
             nh = new NodeHandle();
 
-            sub = nh.subscribe<Messages.std_msgs.String>("/chatter", 10, subCallback);
+			sub = nh.subscribe<Messages.SimpleSubscriber.SimpleMessage>("/simple_topic", 10, subCallback);
         }
 
-        public void subCallback(Messages.std_msgs.String msg)
+		public void subCallback(Messages.SimpleSubscriber.SimpleMessage msg)
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                l.Content = "Receieved:\n" + msg.data;
+                l.Content = "Receieved:\n" + msg.msg.data + " <--> " + msg.number;
             }), new TimeSpan(0,0,1));
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            ROS.shutdown();
-            ROS.waitForShutdown();
-            base.OnClosing(e);
-        }
-    }
-}
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			ROS.shutdown();
+			ROS.waitForShutdown();
+		}
+	}//public partial class MainWindow : Window
+}//namespace SimpleSubscriber
+

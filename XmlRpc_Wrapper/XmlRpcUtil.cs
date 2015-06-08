@@ -22,7 +22,7 @@ namespace XmlRpc_Wrapper
 {
     public static class XmlRpcUtil
     {
-        private static printint _PRINTINT;
+        //private static printint _PRINTINT;
         private static printstr _PRINTSTR;
 
         private static void thisishowawesomeyouare(string s)

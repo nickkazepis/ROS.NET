@@ -95,7 +95,7 @@ namespace XmlRpc_Wrapper
 
 
         [DebuggerStepThrough]
-        private new static void AddRef(IntPtr ptr)
+        private static void AddRef(IntPtr ptr)
         {
 #if REFDEBUG
             if (refdumper == null)
@@ -125,7 +125,7 @@ namespace XmlRpc_Wrapper
         }
 
         [DebuggerStepThrough]
-        private new static void RmRef(ref IntPtr ptr)
+        private static void RmRef(ref IntPtr ptr)
         {
             lock (reflock)
             {
@@ -288,7 +288,7 @@ namespace XmlRpc_Wrapper
             return executecheckdone(instance, result.instance);
         }
 
-        public new UInt16 HandleEvent(UInt16 eventType)
+        public UInt16 HandleEvent(UInt16 eventType)
         {
             return handleevent(instance, eventType);
         }

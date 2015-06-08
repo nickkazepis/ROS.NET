@@ -390,7 +390,7 @@ namespace Ros_CSharp
 
         public CallbackQueueInterface.ICallbackInfo spliceout(CallbackQueueInterface.ICallbackInfo info)
         {
-            CallbackQueueInterface.ICallbackInfo icb;
+            //CallbackQueueInterface.ICallbackInfo icb;
             int stop;
 #if SAFE
             lock (mut)

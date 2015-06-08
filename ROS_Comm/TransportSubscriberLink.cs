@@ -32,7 +32,7 @@ namespace Ros_CSharp
         private Queue<MessageAndSerializerFunc> outbox = new Queue<MessageAndSerializerFunc>();
         private object outbox_mutex = new object();
         private new Publication parent;
-        private bool queue_full;
+        //private bool queue_full;
         private bool writing_message;
         private int max_queue = 0;
 
@@ -40,7 +40,7 @@ namespace Ros_CSharp
         {
             writing_message = false;
             header_written = false;
-            queue_full = false;
+            //queue_full = false;
         }
 
         #region IDisposable Members
@@ -115,10 +115,10 @@ namespace Ros_CSharp
                 if (max_queue > 0 && outbox.Count >= max_queue)
                 {
                     outbox.Dequeue();
-                    queue_full = true;
+                    //queue_full = true;
                 }
-                else
-                    queue_full = false;
+                //else
+                    //queue_full = false;
                 outbox.Enqueue(holder);
             }
 
@@ -166,8 +166,8 @@ namespace Ros_CSharp
                     writing_message = true;
                     holder = outbox.Dequeue();
                 }
-                if (outbox.Count < max_queue)
-                    queue_full = false;
+                //if (outbox.Count < max_queue)
+                    //queue_full = false;
             }
             if (holder != null)
             {
