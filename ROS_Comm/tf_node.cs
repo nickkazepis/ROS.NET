@@ -12,18 +12,18 @@
 
 #region USINGZ
 
+using MathNet.Spatial.Euclidean;
+using Messages;
+using Messages.std_msgs;
+using Messages.tf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Messages;
-using Messages.std_msgs;
-using Messages.tf;
 using gm = Messages.geometry_msgs;
 using Int64 = System.Int64;
 using String = Messages.std_msgs.String;
-using MathNet.Spatial;
-using Vector3 = MathNet.Spatial.Vector3D;
+using Vector3 = MathNet.Spatial.Euclidean.Vector3D;
 #endregion
 
 namespace Ros_CSharp
